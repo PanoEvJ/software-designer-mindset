@@ -6,11 +6,12 @@ class A:
     _length: int = field(init=False, default=0)
 
 
-@dataclass(slots=True)
+@dataclass
 class B:
     x: int
     y: str = "hello"
-    l: list[int] = field(default_factory=list)
+    l: list[int] = field(default_factory=lambda: [])
+    # l: list[int] = field(default_factory=list) # does the same thing as above
 
 
 @dataclass
