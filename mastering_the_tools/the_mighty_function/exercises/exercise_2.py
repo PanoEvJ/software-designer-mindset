@@ -14,10 +14,25 @@ class Laptop:
     def create_admin_user(self, password: str) -> None:
         print(f"Creating admin user with password {password}.")
 
+    def reset_to_factory(self) -> None:
+        self.format_hd()
+        self.machine_name = "DULL"
+        self.install_os()
+        self.create_admin_user("admin")
+
+
+def reset_to_factory(laptop: Laptop) -> None:
+    laptop.format_hd()
+    laptop.machine_name = "DULL"
+    laptop.install_os()
+    laptop.create_admin_user("admin")
+
 
 def main() -> None:
     laptop = Laptop()
     print(laptop)
+    laptop.reset_to_factory()
+    reset_to_factory(laptop)
 
 
 if __name__ == "__main__":
