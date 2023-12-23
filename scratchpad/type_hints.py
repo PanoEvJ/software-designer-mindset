@@ -1,10 +1,20 @@
+from typing import Callable
+
+IntFunction = Callable[[int], int]
+
+
+def compute_stats(users, plans, products):
+    pass
+
+
 def add_three(x: int) -> int:
     return x + 3
 
 
 def main() -> None:
     var = 1
-    print(f"var = {add_three(var)}")
+    my_var: IntFunction = add_three
+    print(f"var = {my_var(var)}")
 
 
 if "__main__" == __name__:
