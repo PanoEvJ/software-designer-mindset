@@ -1,22 +1,26 @@
 import random
 import string
 from datetime import datetime
+from functools import partial
+from typing import Callable
+
+SelectionFn = Callable[[], str]
 
 
-def generate_id(length: int) -> str:
-    return "".join(
-        random.choice(string.ascii_uppercase + string.digits) for _ in range(length)
-    )
+def generate_id(length: int, sel_fn: SelectionFn) -> str:
+    return "".join(sel_fn() for _ in range(length))
 
 
-def weekday() -> str:
-    today = datetime.today()
-    return f"{today:%A}"
+def weekday(date: datetime) -> str:
+    return f"{date:%A}"
 
 
 def main() -> None:
-    print(f"Today is a {weekday()}")
-    print(f"Your id = {generate_id(10)}")
+    print(f"Today is a {weekday(date=datetime.today())}")
+    sel_fn: SelectionFn = partial(
+        random.choice, seq=string.ascii_uppercase + string.digits
+    )  # type: ignore
+    print(f"Your id = {generate_id(length=10, sel_fn=sel_fn)}")
 
 
 if __name__ == "__main__":

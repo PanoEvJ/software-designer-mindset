@@ -35,8 +35,8 @@ def main() -> None:
         Customer("Holly", 60),
         Customer("Iris", 65),
     ]
-    send_email_promotion(customers, is_eligible_for_promotion)
-    # send_email_promotion(customers, lambda customer: customer.age > 50)
+    # send_email_promotion(customers, is_eligible_for_promotion)
+    send_email_promotion(customers, lambda customer: customer.age > 50)
 
 
 if __name__ == "__main__":
