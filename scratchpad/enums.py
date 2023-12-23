@@ -1,19 +1,19 @@
-from enum import Enum, auto
+from enum import Enum
 
 
 class Month(Enum):
-    JAN = auto()
-    FEB = auto()
-    MAR = auto()
-    APR = auto()
-    MAY = auto()
-    JUN = auto()
-    JUL = auto()
-    AUG = auto()
-    SEP = auto()
-    OCT = auto()
-    NOV = auto()
-    DEC = auto()
+    JAN = "January"
+    FEB = "February"
+    MAR = "March"
+    APR = "April"
+    MAY = "May"
+    JUN = "June"
+    JUL = "July"
+    AUG = "August"
+    SEP = "September"
+    OCT = "October"
+    NOV = "November"
+    DEC = "December"
 
 
 def is_birthday(month: Month):
