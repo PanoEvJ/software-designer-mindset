@@ -53,10 +53,7 @@ class Employee:
         self.payment_sources.append(payment_source)
 
     def compute_pay(self) -> int:
-        total: int = 0
-        for source in self.payment_sources:
-            total += source.compute_pay()
-        return total
+        return sum(source.compute_pay() for source in self.payment_sources)
 
 
 def main() -> None:
