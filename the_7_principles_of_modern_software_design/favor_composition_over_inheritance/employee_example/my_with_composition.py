@@ -2,11 +2,11 @@
 Very advanced Employee management system.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Protocol
 
 
-class PaymentSources(Protocol):
+class PaymentSource(Protocol):
     def compute_pay(self) -> int:
         ...
 
@@ -47,10 +47,14 @@ class CommissionPayment:
 class Employee:
     name: str
     id: int
+    payment_sources: list[PaymentSource] = field(default_factory=list)
 
-    def compute_pay(self, payment_sources: list[PaymentSources]) -> int:
+    def add_payment_source(self, payment_source: PaymentSource):
+        self.payment_sources.append(payment_source)
+
+    def compute_pay(self) -> int:
         total: int = 0
-        for source in payment_sources:
+        for source in self.payment_sources:
             total += source.compute_pay()
         return total
 
@@ -59,16 +63,16 @@ def main() -> None:
     henry = Employee(name="Henry", id=12346)
     henry_hourly_payment = HourlyPayment(pay_rate=5000, hours_worked=100)
     henry_commission_payment = CommissionPayment(contracts_landed=5)
-    print(
-        f"{henry.name} earned ${(henry.compute_pay([henry_hourly_payment, henry_commission_payment]) / 100):.2f}."
-    )
+    henry.add_payment_source(payment_source=henry_hourly_payment)
+    henry.add_payment_source(payment_source=henry_commission_payment)
+    print(f"{henry.name} earned ${(henry.compute_pay() / 100):.2f}.")
 
     sarah = Employee(name="Sarah", id=47832)
     sarah_salary_payment = SalaryPayment(monthly_salary=5000000)
     sarah_commission_payment = CommissionPayment(contracts_landed=10)
-    print(
-        f"{sarah.name} earned ${(sarah.compute_pay([sarah_salary_payment, sarah_commission_payment]) / 100):.2f}."
-    )
+    sarah.add_payment_source(payment_source=sarah_salary_payment)
+    sarah.add_payment_source(payment_source=sarah_commission_payment)
+    print(f"{sarah.name} earned ${(sarah.compute_pay() / 100):.2f}.")
 
 
 if __name__ == "__main__":
