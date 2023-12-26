@@ -58,17 +58,13 @@ class Employee:
 
 def main() -> None:
     henry = Employee(name="Henry", id=12346)
-    henry_hourly_payment = HourlyPayment(pay_rate=5000, hours_worked=100)
-    henry_commission_payment = CommissionPayment(contracts_landed=5)
-    henry.add_payment_source(payment_source=henry_hourly_payment)
-    henry.add_payment_source(payment_source=henry_commission_payment)
+    henry.add_payment_source(HourlyPayment(pay_rate=5000, hours_worked=100))
+    henry.add_payment_source(CommissionPayment(contracts_landed=5))
     print(f"{henry.name} earned ${(henry.compute_pay() / 100):.2f}.")
 
     sarah = Employee(name="Sarah", id=47832)
-    sarah_salary_payment = SalaryPayment(monthly_salary=5000000)
-    sarah_commission_payment = CommissionPayment(contracts_landed=10)
-    sarah.add_payment_source(payment_source=sarah_salary_payment)
-    sarah.add_payment_source(payment_source=sarah_commission_payment)
+    sarah.add_payment_source(SalaryPayment(monthly_salary=5000000))
+    sarah.add_payment_source(CommissionPayment(contracts_landed=10))
     print(f"{sarah.name} earned ${(sarah.compute_pay() / 100):.2f}.")
 
 
