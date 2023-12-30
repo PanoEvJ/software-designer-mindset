@@ -24,9 +24,6 @@ class Vehicle:
     price_per_day: int
     reserved: bool
 
-    def total_price(self, days: int, additional_km: int) -> int:
-        return days * self.price_per_day + additional_km * self.price_per_km
-
 
 class ContractStatus(Enum):
     ORDERED = auto()
@@ -57,7 +54,10 @@ class RentalContract:
 
     @property
     def total_price(self) -> int:
-        return self.vehicle.total_price(self.days, self.additional_km)
+        return (
+            self.vehicle.price_per_day * self.days
+            + self.vehicle.price_per_km * self.additional_km
+        )
 
 
 VEHICLES = {
@@ -101,6 +101,7 @@ def main():
     print(rental)
 
     # calculate the total price
+    print(f"Total price: ${rental.total_price/100:.2f}")
 
 
 if __name__ == "__main__":
