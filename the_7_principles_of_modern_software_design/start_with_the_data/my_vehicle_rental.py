@@ -37,14 +37,19 @@ class ContractStatus(Enum):
 
 
 @dataclass
+class Customer:
+    id: int
+    name: str
+    address: str
+    postal_code: str
+    city: str
+    email: str
+
+
+@dataclass
 class RentalContract:
     vehicle: Vehicle
-    customer_id: int
-    customer_name: str
-    customer_address: str
-    customer_postal_code: str
-    customer_city: str
-    customer_email: str
+    customer: Customer
     contract_status: ContractStatus
     pickup_date: datetime
     days: int = 1
@@ -73,15 +78,19 @@ def main():
 
     additional_km = read_kms_to_drive()
 
-    # setup the rental contract
-    rental = RentalContract(
-        VEHICLES[vehicle_type],
+    customer = Customer(
         12345,
         "Arjan",
         "Sesame street 104",
         "1234",
         "Amsterdam",
         "hi@arjancodes.com",
+    )
+
+    # setup the rental contract
+    rental = RentalContract(
+        VEHICLES[vehicle_type],
+        customer,
         ContractStatus.ORDERED,
         datetime.now(),
         days,
@@ -92,7 +101,6 @@ def main():
     print(rental)
 
     # calculate the total price
-    print(f"Total price: ${rental.total_price/100:.2f}")
 
 
 if __name__ == "__main__":
