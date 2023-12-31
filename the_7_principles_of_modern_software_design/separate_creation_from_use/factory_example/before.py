@@ -122,16 +122,24 @@ FACTORIES: dict[str, ExporterFactory] = {
 }
 
 
-def main() -> None:
-    # read the desired export quality
-    export_quality = read_choice(
-        "What output quality do you want", ["low", "high", "master"]
-    )
-
-    # create the video and audio exporters
-    factory_exporter = FACTORIES[export_quality]
+def read_factory(
+    question: str, choices: list[str], factories: dict[str, ExporterFactory] = FACTORIES
+) -> tuple[VideoExporter, AudioExporter]:
+    choice = ""
+    while choice not in choices:
+        choice = input(f"{question} ({', '.join(choices)})? ")
+    factory_exporter = factories[choice]
     video_exporter = factory_exporter.create_video_exporter()
     audio_exporter = factory_exporter.create_audio_exporter()
+    return video_exporter, audio_exporter
+
+
+def main() -> None:
+    # read the desired export quality & create the video and audio exporters
+    (video_exporter, audio_exporter) = read_factory(
+        "What output quality do you want", ["low", "high", "master"]
+    )
+    #
 
     # prepare the export
     video_exporter.prepare_export("placeholder_for_video_data")
