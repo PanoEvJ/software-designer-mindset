@@ -138,8 +138,8 @@ def main() -> None:
     factory = read_factory()
 
     # prepare & do the export
-    video_exporter = factory_exporter.create_video_exporter()
-    audio_exporter = factory_exporter.create_audio_exporter()
+    video_exporter = factory.create_video_exporter()
+    audio_exporter = factory.create_audio_exporter()
 
     video_exporter.prepare_export("placeholder_for_video_data")
     audio_exporter.prepare_export("placeholder_for_audio_data")
