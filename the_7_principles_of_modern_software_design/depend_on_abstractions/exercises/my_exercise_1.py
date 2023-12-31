@@ -28,7 +28,9 @@ class CloudService:
     service: CloudServiceProvider
     storage_manager: CloudStorage
 
-    def connect(self) -> None:
+    def connect(
+        self,
+    ) -> None:
         print("Connecting to the cloud service.")
         credentials = self.auth_provider.retrieve_credentials()
         self.service.connect(credentials)
