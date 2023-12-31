@@ -115,6 +115,13 @@ class MasterQualityFactoryExporter:
         return WAVAudioExporter()
 
 
+FACTORIES = {
+    "low": LowQualityFactoryExporter(),
+    "high": HighQualityFactoryExporter(),
+    "master": MasterQualityFactoryExporter(),
+}
+
+
 def main() -> None:
     # read the desired export quality
     export_quality = read_choice(
@@ -122,19 +129,9 @@ def main() -> None:
     )
 
     # create the video and audio exporters
-    if export_quality == "low":
-        low_quality_factory_exporter = LowQualityFactoryExporter()
-        video_exporter = low_quality_factory_exporter.create_video_exporter()
-        audio_exporter = low_quality_factory_exporter.create_audio_exporter()
-    elif export_quality == "high":
-        high_quality_factory_exporter = HighQualityFactoryExporter()
-        video_exporter = high_quality_factory_exporter.create_video_exporter()
-        audio_exporter = high_quality_factory_exporter.create_audio_exporter()
-    else:
-        # default: master quality
-        master_quality_factory_exporter = MasterQualityFactoryExporter()
-        video_exporter = master_quality_factory_exporter.create_video_exporter()
-        audio_exporter = master_quality_factory_exporter.create_audio_exporter()
+    factory_exporter = FACTORIES[export_quality]
+    video_exporter = factory_exporter.create_video_exporter()
+    audio_exporter = factory_exporter.create_audio_exporter()
 
     # prepare the export
     video_exporter.prepare_export("placeholder_for_video_data")
