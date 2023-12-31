@@ -83,7 +83,7 @@ class WAVAudioExporter:
         print(f"Exporting audio data in WAV format to {folder}.")
 
 
-class FactoryExporter(Protocol):
+class ExporterFactory(Protocol):
     def create_video_exporter(self) -> VideoExporter:
         ...
 
@@ -91,7 +91,7 @@ class FactoryExporter(Protocol):
         ...
 
 
-class LowQualityFactoryExporter:
+class LowQualityExporter:
     def create_video_exporter(self) -> VideoExporter:
         return H264BPVideoExporter()
 
@@ -99,7 +99,7 @@ class LowQualityFactoryExporter:
         return AACAudioExporter()
 
 
-class HighQualityFactoryExporter:
+class HighQualityExporter:
     def create_video_exporter(self) -> VideoExporter:
         return H264Hi422PVideoExporter()
 
@@ -107,7 +107,7 @@ class HighQualityFactoryExporter:
         return AACAudioExporter()
 
 
-class MasterQualityFactoryExporter:
+class MasterQualityExporter:
     def create_video_exporter(self) -> VideoExporter:
         return LosslessVideoExporter()
 
@@ -115,10 +115,10 @@ class MasterQualityFactoryExporter:
         return WAVAudioExporter()
 
 
-FACTORIES = {
-    "low": LowQualityFactoryExporter(),
-    "high": HighQualityFactoryExporter(),
-    "master": MasterQualityFactoryExporter(),
+FACTORIES: dict[str, ExporterFactory] = {
+    "low": LowQualityExporter(),
+    "high": HighQualityExporter(),
+    "master": MasterQualityExporter(),
 }
 
 
