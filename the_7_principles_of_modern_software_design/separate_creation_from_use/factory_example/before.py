@@ -133,11 +133,7 @@ def read_factory() -> ExporterFactory:
             print(f"Unknown output quality option: {export_quality}.")
 
 
-def main() -> None:
-    # read the desired export quality & create the video and audio exporters
-    factory = read_factory()
-
-    # prepare & do the export
+def do_export(factory: ExporterFactory) -> None:
     video_exporter = factory.create_video_exporter()
     audio_exporter = factory.create_audio_exporter()
 
@@ -148,6 +144,14 @@ def main() -> None:
     folder = Path("/usr/tmp/video")
     video_exporter.do_export(folder)
     audio_exporter.do_export(folder)
+
+
+def main() -> None:
+    # read the desired export quality & create the video and audio exporters
+    factory = read_factory()
+
+    # prepare & do the export
+    do_export(factory)
 
 
 if __name__ == "__main__":
